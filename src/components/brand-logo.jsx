@@ -1,7 +1,7 @@
 import { assetUrl } from '../utils/asset-url.js';
 
-const DARK_LOGO_SRC = assetUrl('images/logo/Brighter%20Smiles%20Dental%20logo.png');
-const LIGHT_LOGO_SRC = assetUrl('images/logo/Brighter%20Smiles%20logo%20design(lightmode).png');
+const DARK_LOGO_SRC = assetUrl('images/logo/Brighter-Smiles-Dental-logo.png');
+const LIGHT_LOGO_SRC = assetUrl('images/logo/Brighter-Smiles-logo-design(lightmode).png');
 
 export function BrandLogo({ compact = false }) {
   const sizeClassName = compact ? 'brand-logo__image brand-logo__image--compact' : 'brand-logo__image';
