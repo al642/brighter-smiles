@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from './button.jsx';
 import { BrandLogo } from './brand-logo.jsx';
+import { useMediaQuery } from '../utils/use-media-query.js';
 
 const navItems = [
   ['hero', 'Home'],
@@ -13,18 +14,14 @@ const navItems = [
 export function Navbar({ activeSection, scrollTo, theme, onToggleTheme }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const headerRef = useRef(null);
+  const isMobile = useMediaQuery('(max-width: 820px)');
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 820) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    if (!isMobile) {
+      setIsMenuOpen(false);
+    }
+  }, [isMobile]);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -58,6 +55,36 @@ export function Navbar({ activeSection, scrollTo, theme, onToggleTheme }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    if (!isMenuOpen || !isMobile) {
+      return undefined;
+    }
+
+    const handlePointerDown = (event) => {
+      if (!headerRef.current?.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    const handleScrollClose = () => {
+      setIsMenuOpen(false);
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('scroll', handleScrollClose, { passive: true });
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('scroll', handleScrollClose);
+    };
+  }, [isMenuOpen, isMobile]);
+
+  useEffect(() => {
+    if (isMobile) {
+      setIsMenuOpen(false);
+    }
+  }, [activeSection, isMobile]);
+
   const handleNavigate = (id) => {
     scrollTo(id);
     setIsMenuOpen(false);
@@ -69,7 +96,7 @@ export function Navbar({ activeSection, scrollTo, theme, onToggleTheme }) {
   };
 
   return (
-    <header className={isHeaderHidden ? 'site-header is-hidden' : 'site-header'}>
+    <header ref={headerRef} className={isHeaderHidden ? 'site-header is-hidden' : 'site-header'}>
       <div className="shell-inner nav-row">
         <button className="brand" onClick={() => handleNavigate('hero')} aria-label="Go to top">
           <BrandLogo compact />

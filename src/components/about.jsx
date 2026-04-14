@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { teamMembers } from '../data/team.js';
+import { useMediaQuery } from '../utils/use-media-query.js';
 
 const storyMoments = [
   {
@@ -20,6 +22,12 @@ const storyMoments = [
 
 export function About() {
   const [leadMember, ...supportingTeam] = teamMembers;
+  const isMobile = useMediaQuery('(max-width: 820px)');
+  const [expandedMember, setExpandedMember] = useState(0);
+
+  const toggleMember = (index) => {
+    setExpandedMember((currentIndex) => (currentIndex === index ? null : index));
+  };
 
   return (
     <>
@@ -63,39 +71,86 @@ export function About() {
             <h2>Clinical expertise with a more human, reassuring approach.</h2>
           </div>
 
-          <div className="team-feature" data-reveal="zoom-in">
-            <img src={leadMember.image} alt={leadMember.name} className="team-feature-image" />
-            <div className="team-feature-copy">
-              <p className="team-role">{leadMember.role}</p>
-              <h3>{leadMember.name}</h3>
-              <p>
-                Dr. Chris founded Brighter Smiles with a vision to deliver world-class dental care
-                in Mbarara while maintaining high standards of comfort, safety, and compassion.
-              </p>
-              <div className="credentials">
-                <span>BDS, Makerere University</span>
-                <span>Advanced Restorative Dentistry</span>
-                <span>Member, Uganda Dental Association</span>
-              </div>
-            </div>
-          </div>
+          {isMobile ? (
+            <div className="team-mobile-stack">
+              {teamMembers.map((member, index) => {
+                const isExpanded = expandedMember === index;
 
-          <div className="team-grid">
-            {supportingTeam.map((member, index) => (
-              <article
-                key={member.name}
-                className="team-card"
-                data-reveal={index === 1 ? 'slide-up' : 'slide-left'}
-              >
-                <img src={member.image} alt={member.name} className="team-card-image" />
-                <div className="team-card-copy">
-                  <p className="team-role">{member.role}</p>
-                  <h3>{member.name}</h3>
-                  <p>{member.summary}</p>
+                return (
+                  <article
+                    key={member.name}
+                    className={isExpanded ? 'team-card team-card--accordion is-expanded' : 'team-card team-card--accordion'}
+                  >
+                    <button
+                      type="button"
+                      className="team-card-toggle"
+                      aria-expanded={isExpanded}
+                      onClick={() => toggleMember(index)}
+                    >
+                      <img src={member.image} alt={member.name} className="team-card-image" />
+                      <div className="team-card-copy">
+                        <p className="team-role">{member.role}</p>
+                        <h3>{member.name}</h3>
+                      </div>
+                      <span className="team-card-chevron" aria-hidden="true">
+                        {isExpanded ? '−' : '+'}
+                      </span>
+                    </button>
+                    <div className="team-card-details">
+                      <p>
+                        {index === 0
+                          ? 'Dr. Chris founded Brighter Smiles with a vision to deliver world-class dental care in Mbarara while maintaining high standards of comfort, safety, and compassion.'
+                          : member.summary}
+                      </p>
+                      {index === 0 ? (
+                        <div className="credentials">
+                          <span>BDS, Makerere University</span>
+                          <span>Advanced Restorative Dentistry</span>
+                          <span>Member, Uganda Dental Association</span>
+                        </div>
+                      ) : null}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          ) : (
+            <>
+              <div className="team-feature" data-reveal="zoom-in">
+                <img src={leadMember.image} alt={leadMember.name} className="team-feature-image" />
+                <div className="team-feature-copy">
+                  <p className="team-role">{leadMember.role}</p>
+                  <h3>{leadMember.name}</h3>
+                  <p>
+                    Dr. Chris founded Brighter Smiles with a vision to deliver world-class dental care
+                    in Mbarara while maintaining high standards of comfort, safety, and compassion.
+                  </p>
+                  <div className="credentials">
+                    <span>BDS, Makerere University</span>
+                    <span>Advanced Restorative Dentistry</span>
+                    <span>Member, Uganda Dental Association</span>
+                  </div>
                 </div>
-              </article>
-            ))}
-          </div>
+              </div>
+
+              <div className="team-grid">
+                {supportingTeam.map((member, index) => (
+                  <article
+                    key={member.name}
+                    className="team-card"
+                    data-reveal={index === 1 ? 'slide-up' : 'slide-left'}
+                  >
+                    <img src={member.image} alt={member.name} className="team-card-image" />
+                    <div className="team-card-copy">
+                      <p className="team-role">{member.role}</p>
+                      <h3>{member.name}</h3>
+                      <p>{member.summary}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </section>
     </>

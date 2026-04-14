@@ -6,10 +6,12 @@ import { Hero } from './components/hero.jsx';
 import { Navbar } from './components/navbar.jsx';
 import { Services } from './components/services.jsx';
 import { Testimonials } from './components/testimonials.jsx';
+import { useMediaQuery } from './utils/use-media-query.js';
 
 function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  const isMobile = useMediaQuery('(max-width: 820px)');
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -18,6 +20,12 @@ function App() {
 
   useEffect(() => {
     const revealItems = document.querySelectorAll('[data-reveal]');
+
+    if (isMobile) {
+      revealItems.forEach((item) => item.classList.add('is-visible'));
+      return undefined;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -32,7 +40,7 @@ function App() {
     revealItems.forEach((item) => observer.observe(item));
 
     return () => observer.disconnect();
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     const sectionElements = Array.from(document.querySelectorAll('section[id]'));
@@ -55,6 +63,17 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (isMobile) {
+      const hero = document.getElementById('hero');
+
+      if (hero) {
+        hero.style.setProperty('--hero-shift', '0px');
+        hero.style.setProperty('--hero-fade', '1');
+      }
+
+      return undefined;
+    }
+
     let ticking = false;
 
     const updateScrollState = () => {
@@ -85,7 +104,7 @@ function App() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };
-  }, []);
+  }, [isMobile]);
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
