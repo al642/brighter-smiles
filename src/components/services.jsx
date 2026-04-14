@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { carePrograms } from '../data/careprograms.js';
 import { services } from '../data/services.js';
+import { assetUrl } from '../utils/asset-url.js';
 
 export function Services() {
   const [expandedService, setExpandedService] = useState(null);
@@ -38,7 +39,7 @@ export function Services() {
     <section id="services" className="services-section">
       <div className="services-hero">
         <img
-          src="/images/hero/services-smile-mirror.jpg"
+          src={assetUrl('images/hero/services-smile-mirror.jpg')}
           alt="A patient smiling into a hand mirror during dental care."
           className="services-hero-image"
         />
