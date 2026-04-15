@@ -95,8 +95,16 @@ export function Navbar({ activeSection, scrollTo, theme, onToggleTheme }) {
     setIsMenuOpen(false);
   };
 
+  const headerClassName = [
+    'site-header',
+    isHeaderHidden ? 'is-hidden' : '',
+    isMenuOpen ? 'is-menu-open' : ''
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <header ref={headerRef} className={isHeaderHidden ? 'site-header is-hidden' : 'site-header'}>
+    <header ref={headerRef} className={headerClassName}>
       <div className="shell-inner nav-row">
         <button className="brand" onClick={() => handleNavigate('hero')} aria-label="Go to top">
           <BrandLogo compact />
