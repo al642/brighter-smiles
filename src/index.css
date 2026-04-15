@@ -1471,10 +1471,10 @@ a {
 .footer-links {
   display: grid;
   align-content: start;
-  justify-self: center;
-  justify-items: center;
+  justify-self: start;
+  justify-items: start;
   gap: 0.45rem;
-  text-align: center;
+  text-align: left;
 }
 
 .footer-link {
