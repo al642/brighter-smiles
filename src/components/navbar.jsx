@@ -29,13 +29,17 @@ export function Navbar({ activeSection, scrollTo, theme, onToggleTheme }) {
 
     const updateHeaderVisibility = () => {
       const currentScrollY = window.scrollY;
-      const nearTop = currentScrollY < 40;
-      const scrollingDown = currentScrollY > lastScrollY + 10;
-      const scrollingUp = currentScrollY < lastScrollY - 6;
+      const nearTop = currentScrollY < (isMobile ? 8 : 40);
+      const scrollingDown = isMobile
+        ? currentScrollY > lastScrollY
+        : currentScrollY > lastScrollY + 10;
+      const scrollingUp = isMobile
+        ? currentScrollY < lastScrollY
+        : currentScrollY < lastScrollY - 6;
 
       if (nearTop || scrollingUp || isMenuOpen) {
         setIsHeaderHidden(false);
-      } else if (scrollingDown && currentScrollY > 120) {
+      } else if (scrollingDown && (isMobile || currentScrollY > 120)) {
         setIsHeaderHidden(true);
       }
 
@@ -53,7 +57,7 @@ export function Navbar({ activeSection, scrollTo, theme, onToggleTheme }) {
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isMenuOpen]);
+  }, [isMenuOpen, isMobile]);
 
   useEffect(() => {
     if (!isMenuOpen || !isMobile) {
