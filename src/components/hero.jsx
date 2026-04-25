@@ -9,7 +9,7 @@ const stats = [
   { value: '4.9/5', label: 'Patient satisfaction' }
 ];
 
-export function Hero({ scrollTo }) {
+export function Hero({ scrollTo, onBookAppointment }) {
   const [activeSlide, setActiveSlide] = useState(0);
   const isMobile = useMediaQuery('(max-width: 820px)');
 
@@ -57,7 +57,7 @@ export function Hero({ scrollTo }) {
             modern treatment options, and a clinic experience built around comfort.
           </p>
           <div className="hero-actions">
-            <Button onClick={() => scrollTo('contact')}>Schedule Appointment</Button>
+            <Button onClick={onBookAppointment}>Schedule Appointment</Button>
             <Button variant="ghost" onClick={() => scrollTo('services')}>
               Explore Services
             </Button>

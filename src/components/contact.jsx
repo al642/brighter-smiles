@@ -1,7 +1,7 @@
 import { contactDetails } from '../data/contactdetails.js';
 import { Button } from './button.jsx';
 
-export function Contact() {
+export function Contact({ onBookAppointment }) {
   return (
     <section id="contact" className="contact-section">
       <div className="shell-inner contact-grid">
@@ -12,6 +12,11 @@ export function Contact() {
             The clinic makes it easy to reach the team for routine appointments, treatment
             questions, and urgent dental needs.
           </p>
+          <div className="contact-direct-lines">
+            <a href={`tel:${contactDetails.emergency.replace(/\s/g, '')}`}>{contactDetails.emergency}</a>
+            <a href={`mailto:${contactDetails.email}`}>{contactDetails.email}</a>
+            <span>{contactDetails.location}</span>
+          </div>
         </div>
 
         <div className="contact-card" data-reveal="zoom-in">
@@ -20,10 +25,8 @@ export function Contact() {
           <p>{contactDetails.hours.saturday}</p>
           <p>{contactDetails.hours.emergency}</p>
           <div className="contact-card-actions">
-            <Button href="https://wa.me/256700726076">Message on WhatsApp</Button>
-            <Button href="mailto:mugarurajoel@gmail.com" variant="ghost">
-              Send Email
-            </Button>
+            <Button onClick={onBookAppointment}>Make Appointment</Button>
+            <Button href="https://wa.me/256700726076" variant="ghost">WhatsApp</Button>
           </div>
         </div>
       </div>

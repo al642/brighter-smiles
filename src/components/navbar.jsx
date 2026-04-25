@@ -11,7 +11,7 @@ const navItems = [
   ['contact', 'Contact']
 ];
 
-export function Navbar({ activeSection, scrollTo, theme, onToggleTheme }) {
+export function Navbar({ activeSection, scrollTo, theme, onToggleTheme, onBookAppointment }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const headerRef = useRef(null);
@@ -95,7 +95,7 @@ export function Navbar({ activeSection, scrollTo, theme, onToggleTheme }) {
   };
 
   const handleBookVisit = () => {
-    scrollTo('contact');
+    onBookAppointment();
     setIsMenuOpen(false);
   };
 

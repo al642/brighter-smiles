@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { About } from './components/about.jsx';
+import { AppointmentModal } from './components/appointment-modal.jsx';
 import { Contact } from './components/contact.jsx';
 import { Footer } from './components/footer.jsx';
 import { Hero } from './components/hero.jsx';
@@ -11,6 +12,7 @@ import { useMediaQuery } from './utils/use-media-query.js';
 function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
   const isMobile = useMediaQuery('(max-width: 820px)');
 
   useEffect(() => {
@@ -121,17 +123,19 @@ function App() {
         scrollTo={scrollTo}
         theme={theme}
         onToggleTheme={toggleTheme}
+        onBookAppointment={() => setIsAppointmentOpen(true)}
       />
 
       <main>
-        <Hero scrollTo={scrollTo} />
+        <Hero scrollTo={scrollTo} onBookAppointment={() => setIsAppointmentOpen(true)} />
         <About />
         <Services />
         <Testimonials />
-        <Contact />
+        <Contact onBookAppointment={() => setIsAppointmentOpen(true)} />
       </main>
 
       <Footer scrollTo={scrollTo} />
+      <AppointmentModal isOpen={isAppointmentOpen} onClose={() => setIsAppointmentOpen(false)} />
     </div>
   );
 }

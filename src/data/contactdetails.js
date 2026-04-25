@@ -1,5 +1,5 @@
 export const contactDetails = {
-  location: 'Plot 42, High Street, Mbarara City, Uganda',
+  location: 'GBK Plaza - Ntare Rd, Makhansing Street, Mbarara City',
   phone: '+256 700 726076',
   emergency: '+256 776 833132',
   alternatePhones: [
@@ -12,7 +12,7 @@ export const contactDetails = {
       href: 'tel:+256776833132'
     }
   ],
-  email: 'mugarurajoel@gmail.com',
+  email: 'lucentsmiles256@gmail.com',
   hours: {
     weekdays: 'Mon to Fri: 8:00 AM to 6:00 PM',
     saturday: 'Saturday: 9:00 AM to 4:00 PM',

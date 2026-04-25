@@ -73,7 +73,7 @@ export function Footer({ scrollTo }) {
               <a href={entry.href}>{entry.number}</a>
             </div>
           ))}
-          <a href="mailto:mugarurajoel@gmail.com">{contactDetails.email}</a>
+          <a href={`mailto:${contactDetails.email}`}>{contactDetails.email}</a>
           <div className="footer-socials" aria-label="Social media links">
             {contactDetails.socialLinks.map((link) => (
               <a
