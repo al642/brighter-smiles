@@ -67,7 +67,14 @@ export function Footer({ scrollTo }) {
         </nav>
 
         <div className="footer-contact">
-          <span>{contactDetails.location}</span>
+          <a
+            href={contactDetails.locationHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Open ${contactDetails.location} in Google Maps`}
+          >
+            {contactDetails.location}
+          </a>
           {contactDetails.alternatePhones.map((entry) => (
             <div key={entry.number} className="footer-contact-line">
               <a href={entry.href}>{entry.number}</a>

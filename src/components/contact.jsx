@@ -15,7 +15,14 @@ export function Contact({ onBookAppointment }) {
           <div className="contact-direct-lines">
             <a href={`tel:${contactDetails.emergency.replace(/\s/g, '')}`}>{contactDetails.emergency}</a>
             <a href={`mailto:${contactDetails.email}`}>{contactDetails.email}</a>
-            <span>{contactDetails.location}</span>
+            <a
+              href={contactDetails.locationHref}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open ${contactDetails.location} in Google Maps`}
+            >
+              {contactDetails.location}
+            </a>
           </div>
         </div>
 

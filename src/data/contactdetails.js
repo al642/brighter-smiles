@@ -1,5 +1,6 @@
 export const contactDetails = {
   location: 'GBK Plaza - Ntare Rd, Makhansing Street, Mbarara City',
+  locationHref: 'https://www.google.com/maps/search/?api=1&query=9MV6%2B7C4%2C%20Mbarara',
   phone: '+256 700 726076',
   emergency: '+256 776 833132',
   alternatePhones: [
